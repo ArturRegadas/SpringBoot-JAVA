@@ -19,6 +19,8 @@ public class UserModel {
     private String password;
 
     @Column
-    private Long balance;
+    private double balance;
+
+    public double getBalance(){return balance;}
 
 }
