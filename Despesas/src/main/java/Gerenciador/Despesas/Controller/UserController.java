@@ -4,23 +4,26 @@ import gerenciador.despesas.Model.TransactionModel;
 import gerenciador.despesas.Model.UserModel;
 import gerenciador.despesas.Service.UserService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.OffsetDateTime;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
 public class UserController {
 
+    @Autowired
     private UserService userService;
 
     @GetMapping("/getUserData")
     public ResponseEntity<UserModel> getUserData(@RequestParam Long id){
         Optional<UserModel> userToGet = userService.getUserById(id);
         if(userToGet.isPresent())return ResponseEntity.ok(userToGet.get());
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.notFound().build()    ;
     }
 
     @PostMapping("/createUser")
@@ -31,6 +34,7 @@ public class UserController {
 
     @PostMapping("/transferMoney")
     public ResponseEntity<TransactionModel> transferMoney(@RequestBody TransactionModel transactionData){
+        transactionData.setDateTime(OffsetDateTime.now());
         return userService.transferMoney(transactionData);
     }
 

@@ -2,22 +2,21 @@ package gerenciador.despesas.Model;
 
 import java.time.OffsetDateTime;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Transactions")
 public class TransactionModel {
     @Id
     @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
     private Long senderId;
 
-    @Column Long recipientId;
+    @Column
+    private Long recipientId;
 
     @Column
     private Double value;
@@ -25,9 +24,14 @@ public class TransactionModel {
     @Column
     private OffsetDateTime dateTime;
 
+    public Long getId(){return id;}
     public Long getSenderId() {return senderId;}
-
     public Long getRecipientId() {return recipientId;}
-
     public double getValue(){return value;}
+    public OffsetDateTime getDateTime(){return dateTime;}
+
+    public void setSenderId(Long senderId) {this.senderId = senderId;}
+    public void setRecipientId(Long recipientId) {this.recipientId = recipientId;}
+    public void setValue(Double value) {this.value = value;}
+    public void setDateTime(OffsetDateTime dateTime) {this.dateTime = dateTime;}
 }

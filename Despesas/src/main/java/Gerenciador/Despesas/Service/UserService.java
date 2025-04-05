@@ -3,7 +3,9 @@ package gerenciador.despesas.Service;
 import gerenciador.despesas.Model.TransactionModel;
 import gerenciador.despesas.Model.UserModel;
 import gerenciador.despesas.Repository.UserRepository;
+import gerenciador.despesas.Service.TransactionService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,7 +14,10 @@ import java.util.Optional;
 
 @Service
 public class UserService {
+    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
     private TransactionService transactionService;
 
     public Optional<UserModel> getUserById(Long id){return userRepository.findById(id);}
@@ -45,9 +50,9 @@ public class UserService {
     }
 
     public boolean deleteUserById(Long id){
-        boolean ans = userRepository.existsById(id);
+        if(!userRepository.existsById(id))return false;
         userRepository.deleteById(id);
-        return ans;
+        return true;
     }
 
 
