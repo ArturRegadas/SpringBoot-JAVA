@@ -3,7 +3,7 @@ package WebSocket.Talk.Model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Messages")
+@Table(name = "messages")
 public class ChatMessageModel {
     @Id
     @Column

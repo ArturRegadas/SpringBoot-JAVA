@@ -33,4 +33,14 @@ configurar db em application.properties e dependências em pom.xml
     <li><h2>Model</h2>Representa os dados da aplicação (entidades do banco, DTOs, etc.)</li>
     <li><h2>Repository</h2>Gerencia o acesso ao banco de dados (CRUD, queries, etc.)</li>
     <li><h2>Service</h2>Contém a lógica de negócio e chama os repositórios</li>
+    <li><h2>DTO (Data Transfer Object)</h2>Transporta dados entre camadas da aplicação, normalmente sem lógica de negócio</li>
+    <li><h2>Config</h2>Contém configurações globais da aplicação, como beans, segurança, mapeamentos, conexões, etc.</li>
+</ul>
+
+<h1>COR (Cross-Origin Resource Sharing) </h1>
+<ul>   
+    <li><h2>Conflito em WebSocket</h2>É necessario para que não ocorram erros especificar rotas que podem usufluir da API com 
+    
+    .setAllowedOriginPatterns("http://127.0.0.1:5500") //link
+</li>
 </ul>

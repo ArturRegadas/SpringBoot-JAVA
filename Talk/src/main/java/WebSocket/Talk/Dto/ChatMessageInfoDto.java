@@ -1,6 +1,6 @@
 package WebSocket.Talk.Dto;
 
-public class ChatMessageDto {
+public class ChatMessageInfoDto {
     private Long id;
     private Long senderId;
     private Long recipientId;
