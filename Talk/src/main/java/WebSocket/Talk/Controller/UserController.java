@@ -29,21 +29,27 @@ public class UserController {
         //vericar se username já existe
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
+
+
     @CrossOrigin(origins = "http://127.0.0.1:5500")
     @PostMapping("/login")
-    public ResponseEntity<UserModel> loginUser(@RequestBody LoginInfoDto loginInfo,
-                                               HttpSession session){
+    public ResponseEntity<UserModel> loginUser(@RequestBody LoginInfoDto loginInfo, HttpSession session) {
         UserModel user = userService.loginUser(loginInfo.getUserName(), loginInfo.getPassword());
-        if(user == null)
+        if (user == null)
             return ResponseEntity.notFound().build();
 
-        if(user.getPassword().equals(loginInfo.getPassword())) {
-            session.setAttribute("userId", user.getId());
+        // Verificação do usuário
+        if (user.getPassword().equals(loginInfo.getPassword())) {
+            session.setAttribute("userId", user.getId());  // Salva o userId na sessão
             return ResponseEntity.ok().body(user);
         }
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(user);
     }
+
+
+
+
     @CrossOrigin(origins = "http://127.0.0.1:5500")
     @GetMapping("/getAllUsers")
     public ResponseEntity<List<UserInfoDto>> getAllUsers(){

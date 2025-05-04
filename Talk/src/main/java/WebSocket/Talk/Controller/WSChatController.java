@@ -9,6 +9,8 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
+import java.security.Principal;
+
 @Controller
 public class WSChatController {
 
@@ -24,21 +26,19 @@ public class WSChatController {
         return message;
     }
 
-    @MessageMapping("/chat.private") //destino para o envio de mensagens privadas
-    public void sendPrivateMessage(ChatMessageModel chatMessage){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
-        Long loggedUserId = userDetails.getId();
+    @MessageMapping("/chat.private")
+    public void sendPrivateMessage(Principal principal, ChatMessageModel chatMessage) {
+        Long loggedUserId = Long.parseLong(principal.getName());
 
-        //remetente
-        if(chatMessage.getSenderId().equals(loggedUserId)){
+        if (chatMessage.getSenderId().equals(loggedUserId)) {
             messagingTemplate.convertAndSendToUser(
                     chatMessage.getRecipientId().toString(),
-                    "queue/messages",
+                    "/queue/messages",
                     chatMessage
             );
         }
     }
+
 
 
 

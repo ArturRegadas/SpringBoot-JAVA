@@ -1,4 +1,4 @@
-package WebSocket.Talk.Config;
+package WebSocket.Talk.Config.HandShake;
 
 import WebSocket.Talk.Config.HandShake.AuthHandshakeInterceptor;
 import WebSocket.Talk.Config.HandShake.UserHandShakeHandler;
@@ -26,7 +26,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.addEndpoint("/ws")
                 .addInterceptors(new AuthHandshakeInterceptor())
                 .setHandshakeHandler(new UserHandShakeHandler())
-                .setAllowedOriginPatterns("http://127.0.0.1:5500") // link de uso da api
+                .setAllowedOriginPatterns("http://localhost:5173") // link de uso da api
                 .withSockJS();
     }
 

@@ -13,13 +13,27 @@ public class AuthHandshakeInterceptor implements HandshakeInterceptor {
 
     @Override
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response,
-                                   WebSocketHandler wsHandler, Map<String, Object> attributes)throws Exception{
-        if(request instanceof ServletServerHttpRequest servletRequest){
-            HttpSession session = servletRequest.getServletRequest().getSession(false);
-            if(session != null){
-                Object userId = session.getAttribute("userId");
-                if(userId!=null)
-                    attributes.put("userId", userId);
+                                   WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
+
+        if (request instanceof ServletServerHttpRequest servletRequest) {
+            HttpSession session = servletRequest.getServletRequest().getSession(false);  // Recupera a sessão
+            //System.out.println("userId encontrado: " + userId);
+
+            System.out.println("Sessão ID: " + session.getId());
+            if (session != null) {
+                Object userId = session.getAttribute("userId");  // Recupera o userId da sessão
+
+                var attributeNames = session.getAttributeNames();
+                while (attributeNames.hasMoreElements()) {
+                    String name = attributeNames.nextElement();
+                    Object value = session.getAttribute(name);
+                    System.out.println(" - " + name + ": " + value);
+                }
+
+                System.out.println("Atributos da sessão: " + session.getAttributeNames());
+                if (userId != null) {
+                    attributes.put("userId", userId);  // Coloca o userId nos atributos da conexão
+                }
             }
         }
         return true;
@@ -27,6 +41,6 @@ public class AuthHandshakeInterceptor implements HandshakeInterceptor {
 
     @Override
     public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response,
-                               WebSocketHandler wsHandler, Exception exception){
+                               WebSocketHandler wsHandler, Exception exception) {
     }
 }
