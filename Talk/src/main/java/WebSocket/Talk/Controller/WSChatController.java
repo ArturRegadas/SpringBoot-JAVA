@@ -2,6 +2,8 @@ package WebSocket.Talk.Controller;
 
 import WebSocket.Talk.Model.ChatMessageModel;
 import WebSocket.Talk.Security.MyUserDetails;
+import WebSocket.Talk.Service.ChatMessageService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -13,6 +15,9 @@ import java.security.Principal;
 
 @Controller
 public class WSChatController {
+
+    @Autowired
+    private ChatMessageService chatMessageService;
 
     private final SimpMessagingTemplate messagingTemplate;
 
@@ -36,6 +41,8 @@ public class WSChatController {
                     "/queue/messages",
                     chatMessage
             );
+            chatMessage.setType("MSG");
+            chatMessageService.addMessage(chatMessage);// to DB
         }
     }
 

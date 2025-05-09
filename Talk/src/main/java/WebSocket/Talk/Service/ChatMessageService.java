@@ -12,6 +12,10 @@ public class ChatMessageService {
     @Autowired
     private ChatMessageRepository chatMessageRepository;
 
+    public ChatMessageModel addMessage(ChatMessageModel chatMessageToAdd){
+        return chatMessageRepository.save(chatMessageToAdd);
+    }
+
     public List<ChatMessageModel> getConversationsBySenderAndRecipient(Long senderId, Long recipientId){
         return chatMessageRepository.findBySenderAndRecipient(senderId, recipientId);
     }
